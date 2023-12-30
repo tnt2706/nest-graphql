@@ -1,0 +1,6 @@
+type User {
+  firstName: String
+  lastName: String
+  age: Int
+  roles: [String]
+}
