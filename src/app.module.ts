@@ -8,6 +8,8 @@ import { ConfigsModule } from './configs/configs.module';
 import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
 // import { DatabaseModule } from './dbs/database.module';
+import { DirectivesModule } from './directives/directives.module';
+import { ConstantsModule } from './constants/constants.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { CommonModule } from './common/common.module';
     ConfigsModule,
     UsersModule,
     CommonModule,
+    DirectivesModule,
+    ConstantsModule,
     // DatabaseModule,
   ],
 })

@@ -1,0 +1,4 @@
+type Query {
+  user(_id: ID): User
+  users(filter: UserFilterInput!): [User]
+}

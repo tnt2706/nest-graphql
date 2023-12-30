@@ -21,17 +21,14 @@ export class CreateUserInput {
     roles?: Nullable<Nullable<string>[]>;
 }
 
-export class User {
-    firstName?: Nullable<string>;
-    lastName?: Nullable<string>;
-    age?: Nullable<number>;
-    roles?: Nullable<Nullable<string>[]>;
-}
-
 export class UserResponse {
     isSuccess: boolean;
     message?: Nullable<string>;
     user?: Nullable<User>;
+}
+
+export abstract class IMutation {
+    abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IQuery {
@@ -40,8 +37,11 @@ export abstract class IQuery {
     abstract users(filter: UserFilterInput): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 }
 
-export abstract class IMutation {
-    abstract createUser(input: CreateUserInput): Nullable<User> | Promise<Nullable<User>>;
+export class User {
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
+    age?: Nullable<number>;
+    roles?: Nullable<Nullable<string>[]>;
 }
 
 type Nullable<T> = T | null;

@@ -1,0 +1,12 @@
+input UserFilterInput {
+  searchName: String
+  sortOrder: String
+  sortField: String
+}
+
+input CreateUserInput {
+  firstName: String
+  lastName: String
+  age: Int
+  roles: [String]
+}
