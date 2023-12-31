@@ -6,10 +6,10 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 
 import { ConfigsModule } from './configs/configs.module';
 import { UsersModule } from './users/users.module';
-import { CommonModule } from './common/common.module';
+
 // import { DatabaseModule } from './dbs/database.module';
-import { DirectivesModule } from './directives/directives.module';
 import { ConstantsModule } from './constants/constants.module';
+import { reqContext } from './common/context';
 
 @Module({
   imports: [
@@ -23,19 +23,22 @@ import { ConstantsModule } from './constants/constants.module';
       subscriptions: {
         'graphql-ws': {
           path: '/graphql',
-          // onConnect: (context: Context<any>) => {
-          //   const { connectionParams, extra } = context;
-          //   // user validation will remain the same as in the example above
-          //   // when using with graphql-ws, additional context value should be stored in the extra field
-          //   extra.user = { user: {} };
-          // },
+          onConnect: (context) => {
+            console.log('Client connected');
+          },
+
+          onDisconnect: () => {
+            console.log('Client diConnected');
+          },
         },
+      },
+
+      context: (ctx) => {
+        return reqContext(ctx);
       },
     }),
     ConfigsModule,
     UsersModule,
-    CommonModule,
-    DirectivesModule,
     ConstantsModule,
     // DatabaseModule,
   ],

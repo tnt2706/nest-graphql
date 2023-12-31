@@ -1,18 +1,21 @@
 import {
   Args,
+  Context,
+  Info,
   Mutation,
+  Parent,
   Query,
   ResolveField,
   Resolver,
   Subscription,
 } from '@nestjs/graphql';
-import { PubSub } from 'graphql-subscriptions';
+
+import { createSelectedFields } from 'graphql-fields-projection-v2';
 
 import { User, UserResponse } from './user.entity';
 import { UsersService } from './users.service';
 import { CreateUserInput } from './inputs/create-user.input';
-
-const pubSub = new PubSub();
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -25,17 +28,25 @@ export class UsersResolver {
 
   @Mutation(() => UserResponse)
   async createUser(
+    @Info() info: any,
+    @Context('pubsub') pubsub: PubSub,
     @Args('createUserInput') createUserInput: CreateUserInput,
   ): Promise<UserResponse> {
+    const selectedFields = createSelectedFields(info, { path: 'user' });
+
     const user = await this.userService.createUser(createUserInput);
-    pubSub.publish('USER_CREATED', { userCreated: user.user });
+    pubsub.publish('USER_CREATED', { userCreated: user.user });
 
     return user;
   }
 
-  @Subscription(() => User)
-  userCreated() {
-    return pubSub.asyncIterator('USER_CREATED');
+  @Subscription(() => User, {
+    filter(payload, variables) {
+      return true;
+    },
+  })
+  userCreated(@Context() ctx) {
+    return ctx.pubsub.asyncIterator('USER_CREATED');
   }
 
   // @ResolveField()
