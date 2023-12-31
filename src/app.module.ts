@@ -17,11 +17,20 @@ import { ConstantsModule } from './constants/constants.module';
       driver: ApolloDriver,
       playground: false,
       typePaths: ['./**/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.schema.ts'),
-        outputAs: 'class',
-      },
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      subscriptions: {
+        'graphql-ws': {
+          path: '/graphql',
+          // onConnect: (context: Context<any>) => {
+          //   const { connectionParams, extra } = context;
+          //   // user validation will remain the same as in the example above
+          //   // when using with graphql-ws, additional context value should be stored in the extra field
+          //   extra.user = { user: {} };
+          // },
+        },
+      },
     }),
     ConfigsModule,
     UsersModule,

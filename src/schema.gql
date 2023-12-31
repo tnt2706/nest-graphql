@@ -1,0 +1,39 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  age: Float!
+  email: String!
+  firstName: String!
+  lastName: String!
+  roles: [String!]
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): UserResponse!
+}
+
+type Query {
+  user(_id: String!): User!
+}
+
+type Subscription {
+  userCreated: User!
+}
+
+type User {
+  _id: String!
+  email: String
+  firstName: String
+  lastName: String
+  roles: [String!]!
+  status: String
+  verify: String
+}
+
+type UserResponse {
+  isSuccess: Boolean!
+  message: String
+  user: User
+}

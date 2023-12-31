@@ -5,8 +5,9 @@ input UserFilterInput {
 }
 
 input CreateUserInput {
-  firstName: String
-  lastName: String
-  age: Int
+  firstName: String!
+  lastName: String!
+  email: String!
+  age: Int!
   roles: [String]
 }
