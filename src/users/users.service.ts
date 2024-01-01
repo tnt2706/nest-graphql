@@ -8,6 +8,7 @@ export class UsersService {
     return {
       _id: id,
       firstName: id,
+      createdAt: new Date(),
     };
   }
 
@@ -16,6 +17,7 @@ export class UsersService {
       ...createUserInput,
       _id: '100',
       roles: ['admin'],
+      createdAt: new Date(),
     };
 
     return {

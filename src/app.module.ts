@@ -4,6 +4,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
+import { GraphQLDate, GraphQLDateTime } from 'graphql-scalars';
+import { GraphQLJSON, GraphQLJSONObject } from 'graphql-type-json';
+
 import { ConfigsModule } from './configs/configs.module';
 import { UsersModule } from './users/users.module';
 
@@ -23,7 +26,7 @@ import { reqContext } from './common/context';
       subscriptions: {
         'graphql-ws': {
           path: '/graphql',
-          onConnect: (context) => {
+          onConnect: () => {
             console.log('Client connected');
           },
 
@@ -35,6 +38,12 @@ import { reqContext } from './common/context';
 
       context: (ctx) => {
         return reqContext(ctx);
+      },
+
+      resolvers: {
+        Date: GraphQLDate,
+        // JSON: GraphQLJSON,
+        // JSONObject: GraphQLJSONObject,
       },
     }),
     ConfigsModule,

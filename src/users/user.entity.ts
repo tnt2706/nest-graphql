@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { GraphQLDate } from 'graphql-scalars';
 
 @ObjectType()
 export class User {
@@ -22,6 +23,9 @@ export class User {
 
   @Field(() => [String])
   roles?: string[];
+
+  @Field(() => GraphQLDate)
+  createdAt: Date;
 }
 
 @ObjectType()
