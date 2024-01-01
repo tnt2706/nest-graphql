@@ -22,6 +22,7 @@ export class UsersService {
 
     return {
       isSuccess: true,
+      message: 'I love you',
       user,
     };
   }

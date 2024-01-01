@@ -1,0 +1,2 @@
+directive @auth(roles: [Role] = [ADMIN]) on OBJECT | FIELD_DEFINITION
+directive @upper on FIELD_DEFINITION

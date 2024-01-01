@@ -11,8 +11,11 @@ export function reqContext({ req }) {
     return {};
   }
 
+  const signature = { roles: ['admin'] };
+
   return {
     pubsub,
+    signature,
     token: req.headers['access-token'],
   };
 }

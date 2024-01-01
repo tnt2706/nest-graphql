@@ -1,5 +1,0 @@
-type UserResponse {
-  isSuccess: Boolean!
-  message: String
-  user: User
-}

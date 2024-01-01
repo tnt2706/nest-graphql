@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Directive, Field, ObjectType } from '@nestjs/graphql';
 import { GraphQLDate } from 'graphql-scalars';
 
 @ObjectType()
@@ -7,6 +7,7 @@ export class User {
   _id: string;
 
   @Field({ nullable: true })
+  @Directive('@upper')
   firstName?: string;
 
   @Field({ nullable: true })

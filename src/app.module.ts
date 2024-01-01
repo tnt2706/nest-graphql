@@ -1,18 +1,20 @@
 import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
+import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { GraphQLDate, GraphQLDateTime } from 'graphql-scalars';
 import { GraphQLJSON, GraphQLJSONObject } from 'graphql-type-json';
 
+import { reqContext } from './common/context';
 import { ConfigsModule } from './configs/configs.module';
 import { UsersModule } from './users/users.module';
-
 // import { DatabaseModule } from './dbs/database.module';
 import { ConstantsModule } from './constants/constants.module';
-import { reqContext } from './common/context';
+import { AuthDirective } from './common/directives/auth.directive';
+import { UpperDirective } from './common/directives/upper.directive';
 
 @Module({
   imports: [
@@ -24,16 +26,7 @@ import { reqContext } from './common/context';
       sortSchema: true,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       subscriptions: {
-        'graphql-ws': {
-          path: '/graphql',
-          onConnect: () => {
-            console.log('Client connected');
-          },
-
-          onDisconnect: () => {
-            console.log('Client diConnected');
-          },
-        },
+        'graphql-ws': true,
       },
 
       context: (ctx) => {
@@ -44,6 +37,17 @@ import { reqContext } from './common/context';
         Date: GraphQLDate,
         // JSON: GraphQLJSON,
         // JSONObject: GraphQLJSONObject,
+      },
+
+      // transformSchema: (schema) => AuthDirective(schema, 'auth'),
+      transformSchema: (schema) => UpperDirective(schema, 'upper'),
+      buildSchemaOptions: {
+        directives: [
+          new GraphQLDirective({
+            name: 'upper',
+            locations: [DirectiveLocation.FIELD_DEFINITION],
+          }),
+        ],
       },
     }),
     ConfigsModule,
