@@ -9,7 +9,7 @@
     "target": "ES2021",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
@@ -21,10 +21,10 @@
         "~/*": [
             "src/*"
         ],
-        "@modules/*": ["src/modules/*"],
-        "@base/*": ["src/modules/base/*"],
-        "@api/*": ["src/modules/api/*"],
-        "@web/*": ["src/modules/web/*"],
+        "@modules/*": ["modules/*"],
+        "@base/*": ["modules/base/*"],
+        "@api/*": ["modules/api/*"],
+        "@web/*": ["modules/web/*"],
         "*": [
             "./node_modules/*"
         ]
