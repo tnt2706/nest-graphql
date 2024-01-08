@@ -1,7 +1,6 @@
 import {
   Args,
   Context,
-  Directive,
   Info,
   Mutation,
   Query,
@@ -9,12 +8,16 @@ import {
   Subscription,
 } from '@nestjs/graphql';
 
+import { UseGuards } from '@nestjs/common';
+import { PubSub } from 'graphql-subscriptions';
 import { createSelectedFields } from 'graphql-fields-projection-v2';
 
 import { User, UserResponse } from '@api/entities';
 import { UsersService } from '@api/services';
 import { CreateUserInput } from '@api/dto';
-import { PubSub } from 'graphql-subscriptions';
+import { Roles } from '@api/decorators';
+import { Role } from '@api/enums';
+import { RolesGuard } from '@api/guards';
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -25,8 +28,9 @@ export class UsersResolver {
     return this.userService.getUser(id);
   }
 
-  @Directive('@auth(role: "ADMIN")')
+  @UseGuards(RolesGuard)
   @Mutation(() => UserResponse)
+  @Roles(Role.Admin, Role.User)
   async createUser(
     @Info() info: any,
     @Context('pubsub') pubsub: PubSub,

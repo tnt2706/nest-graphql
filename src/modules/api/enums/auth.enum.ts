@@ -3,3 +3,8 @@ export enum AuthStatusEnum {
   INACTIVE = 'inactive',
   DELETED = 'deleted',
 }
+
+export enum Role {
+  User = 'user',
+  Admin = 'admin',
+}
