@@ -1,0 +1,47 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @auth on FIELD_DEFINITION
+
+input CreateUserInput {
+  age: Float!
+  email: String!
+  firstName: String!
+  lastName: String!
+  roles: [String!]
+}
+
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): UserResponse!
+}
+
+type Query {
+  user(_id: String!): User!
+}
+
+type Subscription {
+  userCreated: User!
+}
+
+type User {
+  _id: String!
+  createdAt: Date!
+  email: String
+  firstName: String
+  lastName: String
+  roles: [String!]!
+  status: String
+  verify: String
+}
+
+type UserResponse {
+  isSuccess: Boolean!
+  message: String
+  user: User
+}

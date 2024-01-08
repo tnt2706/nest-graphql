@@ -1,6 +1,8 @@
 type User {
-  firstName: String
+  _id: ID
+  firstName: String @upper
   lastName: String
   age: Int
   roles: [String]
+  createdAt: Date
 }
