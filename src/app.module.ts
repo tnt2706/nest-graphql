@@ -10,11 +10,12 @@ import { GraphQLJSON, GraphQLJSONObject } from 'graphql-type-json';
 
 import { reqContext } from './common/context';
 import { ConfigsModule } from './configs/configs.module';
-import { UsersModule } from './users/users.module';
+import { ApiModule } from '@api/api.module';
 // import { DatabaseModule } from './dbs/database.module';
 import { ConstantsModule } from './constants/constants.module';
-import { AuthDirective } from './common/directives/auth.directive';
-import { UpperDirective } from './common/directives/upper.directive';
+
+import { UpperDirective, AuthDirective } from '@api/directives';
+import { BaseModule } from '@base/base.module';
 
 @Module({
   imports: [
@@ -39,20 +40,32 @@ import { UpperDirective } from './common/directives/upper.directive';
         // JSONObject: GraphQLJSONObject,
       },
 
-      // transformSchema: (schema) => AuthDirective(schema, 'auth'),
-      transformSchema: (schema) => UpperDirective(schema, 'upper'),
+      transformSchema: (schema) => AuthDirective(schema, 'auth'),
       buildSchemaOptions: {
         directives: [
           new GraphQLDirective({
-            name: 'upper',
-            locations: [DirectiveLocation.FIELD_DEFINITION],
+            name: 'auth',
+            locations: [
+              DirectiveLocation.FIELD_DEFINITION,
+              // DirectiveLocation.OBJECT,
+            ],
           }),
         ],
       },
+      // transformSchema: (schema) => UpperDirective(schema, 'upper'),
+      // buildSchemaOptions: {
+      //   directives: [
+      //     new GraphQLDirective({
+      //       name: 'upper',
+      //       locations: [DirectiveLocation.FIELD_DEFINITION],
+      //     }),
+      //   ],
+      // },
     }),
     ConfigsModule,
-    UsersModule,
     ConstantsModule,
+    ApiModule,
+    BaseModule,
     // DatabaseModule,
   ],
 })

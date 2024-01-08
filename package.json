@@ -35,6 +35,8 @@
     "graphql-subscriptions": "^2.0.0",
     "graphql-type-json": "^0.3.2",
     "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.44",
     "mongoose": "^8.0.3",
     "npm": "^10.2.5",
     "reflect-metadata": "^0.1.13",
