@@ -1,20 +1,19 @@
 import {
   Args,
   Context,
+  Directive,
   Info,
   Mutation,
-  Parent,
   Query,
-  ResolveField,
   Resolver,
   Subscription,
 } from '@nestjs/graphql';
 
 import { createSelectedFields } from 'graphql-fields-projection-v2';
 
-import { User, UserResponse } from './user.entity';
-import { UsersService } from './users.service';
-import { CreateUserInput } from './inputs/create-user.input';
+import { User, UserResponse } from '@api/entities';
+import { UsersService } from '@api/services';
+import { CreateUserInput } from '@api/dto';
 import { PubSub } from 'graphql-subscriptions';
 
 @Resolver(() => User)
@@ -26,6 +25,7 @@ export class UsersResolver {
     return this.userService.getUser(id);
   }
 
+  @Directive('@auth(role: "ADMIN")')
   @Mutation(() => UserResponse)
   async createUser(
     @Info() info: any,

@@ -7,7 +7,7 @@ export class User {
   _id: string;
 
   @Field({ nullable: true })
-  @Directive('@upper')
+  // @Directive('@upper')
   firstName?: string;
 
   @Field({ nullable: true })

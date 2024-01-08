@@ -16,6 +16,21 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+        "~/*": [
+            "src/*"
+        ],
+        "@modules/*": ["src/modules/*"],
+        "@base/*": ["src/modules/base/*"],
+        "@api/*": ["src/modules/api/*"],
+        "@web/*": ["src/modules/web/*"],
+        "*": [
+            "./node_modules/*"
+        ]
+    },
+
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
